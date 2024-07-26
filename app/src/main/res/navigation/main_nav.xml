@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/fragment_dashboard">
+
+    <fragment
+        android:id="@+id/fragment_dashboard"
+        android:name="com.mohit.openinapp.DashboardFragment"
+        android:label="DashboardFragment"
+        tools:layout="@layout/fragment_dashboard" >
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/fragment_courses"
+        android:name="com.mohit.openinapp.CoursesFragment"
+        android:label="CoursesFragment"
+        tools:layout="@layout/fragment_courses" >
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/fragment_campaigns"
+        android:name="com.mohit.openinapp.CampaignsFragment"
+        android:label="CampaignsFragment"
+        tools:layout="@layout/fragment_campaigns" >
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/fragment_profile"
+        android:name="com.mohit.openinapp.ProfileFragment"
+        android:label="ProfileFragment"
+        tools:layout="@layout/fragment_profile" >
+
+    </fragment>
+
+
+
+
+</navigation>

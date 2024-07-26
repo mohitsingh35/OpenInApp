@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="120dp"
+    android:background="@drawable/white_curve_bg"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_marginEnd="15dp"
+    android:layout_height="120dp">
+
+    <ImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:id="@+id/ic"
+        android:src="@drawable/clicks"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16dp"
+        android:maxLines="1"
+        android:id="@+id/count"
+        android:ellipsize="end"
+        android:layout_marginTop="14dp"
+        android:text="123"
+        android:textColor="@color/black"
+        android:fontFamily="@font/figtree_bold"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14dp"
+        android:maxLines="1"
+        android:id="@+id/text"
+        android:ellipsize="end"
+        android:layout_marginTop="6dp"
+        android:text="Today's clicks"
+        android:textColor="@color/text_secondary"
+        android:fontFamily="@font/figtree_regular"/>
+
+</LinearLayout>

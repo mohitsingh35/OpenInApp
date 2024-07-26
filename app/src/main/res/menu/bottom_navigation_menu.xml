@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/links"
+        android:enabled="true"
+        android:icon="@drawable/link"
+        android:title="Links" />
+
+    <item
+        android:id="@+id/courses"
+        android:enabled="true"
+        android:icon="@drawable/courses"
+        android:title="Courses" />
+
+    <item
+        android:id="@+id/plus"
+        android:enabled="true"
+        android:icon="@drawable/plus"
+        android:title="" />
+
+    <item
+        android:id="@+id/campaigns"
+        android:enabled="true"
+        android:icon="@drawable/campaign"
+        android:title="Campaigns" />
+
+
+    <item
+        android:id="@+id/profile"
+        android:enabled="true"
+        android:icon="@drawable/profile"
+        android:title="Profile" />
+
+</menu>
