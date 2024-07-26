@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -26,7 +27,7 @@ import kotlinx.coroutines.launch
 class DashboardFragment : Fragment() {
 
     lateinit var binding: FragmentDashboardBinding
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: MainViewModel by activityViewModels()
     private lateinit var recyclerView: RecyclerView
     private lateinit var linksAdapter: LinksAdapter
 
@@ -45,34 +46,14 @@ class DashboardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setDefaultViews()
-        if (viewModel.data.value == null) {
-            makeApiCall()
-        }
-        else{
-            setData(viewModel.data.value!!)
-        }
+        observeData()
         setUpViews()
     }
-    private fun makeApiCall(){
-        CoroutineScope(Dispatchers.IO).launch {
-            viewModel.getLinksData()
+    private fun observeData(){
+        viewModel.data.observe(viewLifecycleOwner) { data ->
+            Log.d("DashboardFragment", "onCreate: ${data}")
+            setData(data!!)
         }
-        viewModel.linksData.observe(viewLifecycleOwner, Observer { data ->
-            when(data.status){
-                Status.SUCCESS -> {
-                    toast("Success...")
-                    Log.d("MainActivity", "onCreate: ${data.data}")
-                    setData(data.data!!)
-                    viewModel.setData(data.data)
-                }
-                Status.ERROR -> {
-                    toast("Some error occurred...")
-                }
-                Status.LOADING -> {
-                    toast("Loading...")
-                }
-            }
-        })
     }
     private fun setUpViews(){
 

@@ -62,7 +62,7 @@ class MainViewModel @Inject constructor(private val apiService: ApiService) : Vi
     }
 
     fun setData(linksData: LinksData) {
-        _data.value = linksData
+        _data.value=linksData
     }
 
     fun getGreetingMessage() {

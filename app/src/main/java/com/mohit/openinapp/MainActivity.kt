@@ -1,6 +1,7 @@
 package com.mohit.openinapp
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -8,6 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -16,6 +18,10 @@ import com.mohit.musicplayer.utils.ExtensionsUtil.setOnClickThrottleBounceListen
 import com.mohit.musicplayer.utils.ExtensionsUtil.toast
 import com.mohit.openinapp.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -28,9 +34,35 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        if (viewModel.data.value==null) {
+            makeApiCall()
+        }
         setupBottomNav()
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container_view) as NavHostFragment
         navController = navHostFragment.navController
+    }
+
+    private fun makeApiCall(){
+        CoroutineScope(Dispatchers.IO).launch {
+            viewModel.getLinksData()
+            withContext(Dispatchers.Main){
+                viewModel.linksData.observe(this@MainActivity, Observer { data ->
+                    when(data.status){
+                        Status.SUCCESS -> {
+                            toast("Success...")
+                            Log.d("MainActivity", "onCreate: ${data.data}")
+                            viewModel.setData(data.data!!)
+                        }
+                        Status.ERROR -> {
+                            toast("Some error occurred...")
+                        }
+                        Status.LOADING -> {
+                            toast("Loading...")
+                        }
+                    }
+                })
+            }
+        }
     }
 
     private fun setupBottomNav() {
