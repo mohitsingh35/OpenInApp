@@ -78,6 +78,8 @@ dependencies {
     implementation libs.androidx.hilt.common
     implementation libs.androidx.lifecycle.runtime.ktx
     implementation(libs.lottie)
-    implementation project(path: ':chartinglib')
+//    implementation project(path: ':chartinglib')
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
 
 }

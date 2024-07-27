@@ -52,52 +52,6 @@ class DashboardFragment : Fragment() {
         observeData()
         setUpViews()
     }
-    private fun setupChart(chart: LineChart, data: LineData, color: Int, keysList: MutableList<Float>, valuesList: MutableList<Float>) {
-        chart.description.isEnabled = false
-        chart.setDrawGridBackground(false)
-        chart.setTouchEnabled(false)
-        chart.isDragEnabled = false
-        chart.setScaleEnabled(true)
-        chart.setPinchZoom(false)
-        chart.isScaleXEnabled = true
-        chart.isScaleYEnabled = true
-        chart.setBackgroundColor(color)
-        chart.data = data
-        val l = chart.legend
-        l.isEnabled = false
-        val xAxis = chart.xAxis
-        xAxis.isEnabled = true
-        xAxis.position = XAxis.XAxisPosition.BOTTOM
-        xAxis.valueFormatter = XAxisValueFormatter(keysList)
-        xAxis.setDrawGridLines(false)
-        xAxis.setDrawAxisLine(true)
-        xAxis.setDrawGridLines(true)
-        xAxis.gridColor = resources.getColor(R.color.grid)
-        xAxis.gridLineWidth = 0.5f
-        xAxis.setDrawLabels(true)
-        xAxis.granularity = 1f
-        xAxis.axisMinimum = 0f
-        xAxis.axisMaximum = (keysList.size - 1).toFloat()
-        val leftAxis = chart.axisLeft
-        leftAxis.isEnabled = true
-        leftAxis.valueFormatter = YAxisValueFormatter()
-        leftAxis.setDrawGridLines(false)
-        leftAxis.setDrawGridLines(true)
-        leftAxis.gridColor = resources.getColor(R.color.grid)
-        leftAxis.gridLineWidth = 0.5f
-        leftAxis.setDrawAxisLine(true)
-        leftAxis.setDrawLabels(true)
-        leftAxis.granularity = 2f
-        val minY = valuesList.minOrNull() ?: 0f
-        val maxY = valuesList.maxOrNull() ?: 1f
-        leftAxis.axisMinimum = minY
-        leftAxis.axisMaximum = maxY + 1f
-        chart.axisRight.isEnabled = false
-        chart.invalidate()
-        chart.animateX(1000)
-        chart.invalidate()
-    }
-
 
     private fun setChart() {
         charts=binding.chart1
@@ -254,6 +208,52 @@ class DashboardFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun setupChart(chart: LineChart, data: LineData, color: Int, keysList: MutableList<Float>, valuesList: MutableList<Float>) {
+        chart.description.isEnabled = false
+        chart.setDrawGridBackground(false)
+        chart.setTouchEnabled(false)
+        chart.isDragEnabled = false
+        chart.setScaleEnabled(true)
+        chart.setPinchZoom(false)
+        chart.isScaleXEnabled = true
+        chart.isScaleYEnabled = true
+        chart.setBackgroundColor(color)
+        chart.data = data
+        val l = chart.legend
+        l.isEnabled = false
+        val xAxis = chart.xAxis
+        xAxis.isEnabled = true
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.valueFormatter = XAxisValueFormatter(keysList)
+        xAxis.setDrawGridLines(false)
+        xAxis.setDrawAxisLine(true)
+        xAxis.setDrawGridLines(true)
+        xAxis.gridColor = resources.getColor(R.color.grid)
+        xAxis.gridLineWidth = 0.5f
+        xAxis.setDrawLabels(true)
+        xAxis.granularity = 1f
+        xAxis.axisMinimum = 0f
+        xAxis.axisMaximum = (keysList.size - 1).toFloat()
+        val leftAxis = chart.axisLeft
+        leftAxis.isEnabled = true
+        leftAxis.valueFormatter = YAxisValueFormatter()
+        leftAxis.setDrawGridLines(false)
+        leftAxis.setDrawGridLines(true)
+        leftAxis.gridColor = resources.getColor(R.color.grid)
+        leftAxis.gridLineWidth = 0.5f
+        leftAxis.setDrawAxisLine(true)
+        leftAxis.setDrawLabels(true)
+        leftAxis.granularity = 2f
+        val minY = valuesList.minOrNull() ?: 0f
+        val maxY = valuesList.maxOrNull() ?: 1f
+        leftAxis.axisMinimum = minY
+        leftAxis.axisMaximum = maxY + 1f
+        chart.axisRight.isEnabled = false
+        chart.invalidate()
+        chart.animateX(1000)
+        chart.invalidate()
     }
 
     private fun setRecyclerView(list: List<TopLink>){
