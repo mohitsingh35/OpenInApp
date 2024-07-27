@@ -38,6 +38,8 @@ import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.snackbar.BaseTransientBottomBar.ANIMATION_MODE_SLIDE
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.mohit.openinapp.R
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -61,6 +63,22 @@ Tasks FUTURE ADDITION :
 
 
 object ExtensionsUtil {
+
+    fun parseData(dataString: String): Map<String, Double>? {
+        return try {
+            val map = mutableMapOf<String, Double>()
+            val entries = dataString.removeSurrounding("{", "}").split(", ")
+
+            for (entry in entries) {
+                val (key, value) = entry.split("=")
+                map[key.trim()] = value.trim().toDouble()
+            }
+
+            map
+        } catch (e: Exception) {
+            null
+        }
+    }
 
     fun showProgressDialog(context: Context, message: String): Dialog {
         val inflater = LayoutInflater.from(context)

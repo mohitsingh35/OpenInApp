@@ -2,26 +2,28 @@ package com.mohit.openinapp
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.mohit.musicplayer.utils.ExtensionsUtil.setOnClickSingleTimeBounceListener
+import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
+import com.mohit.musicplayer.utils.ExtensionsUtil.isNull
+import com.mohit.musicplayer.utils.ExtensionsUtil.parseData
 import com.mohit.musicplayer.utils.ExtensionsUtil.setOnClickThrottleBounceListener
-import com.mohit.musicplayer.utils.ExtensionsUtil.toast
 import com.mohit.openinapp.databinding.FragmentDashboardBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+
 
 @AndroidEntryPoint
 class DashboardFragment : Fragment() {
@@ -30,6 +32,7 @@ class DashboardFragment : Fragment() {
     private val viewModel: MainViewModel by activityViewModels()
     private lateinit var recyclerView: RecyclerView
     private lateinit var linksAdapter: LinksAdapter
+    private lateinit var charts : LineChart
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,14 +52,92 @@ class DashboardFragment : Fragment() {
         observeData()
         setUpViews()
     }
+    private fun setupChart(chart: LineChart, data: LineData, color: Int, keysList: MutableList<Float>, valuesList: MutableList<Float>) {
+        chart.description.isEnabled = false
+        chart.setDrawGridBackground(false)
+        chart.setTouchEnabled(false)
+        chart.isDragEnabled = false
+        chart.setScaleEnabled(true)
+        chart.setPinchZoom(false)
+        chart.isScaleXEnabled = true
+        chart.isScaleYEnabled = true
+        chart.setBackgroundColor(color)
+        chart.data = data
+        val l = chart.legend
+        l.isEnabled = false
+        val xAxis = chart.xAxis
+        xAxis.isEnabled = true
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.valueFormatter = XAxisValueFormatter(keysList)
+        xAxis.setDrawGridLines(false)
+        xAxis.setDrawAxisLine(true)
+        xAxis.setDrawGridLines(true)
+        xAxis.gridColor = resources.getColor(R.color.grid)
+        xAxis.gridLineWidth = 0.5f
+        xAxis.setDrawLabels(true)
+        xAxis.granularity = 1f
+        xAxis.axisMinimum = 0f
+        xAxis.axisMaximum = (keysList.size - 1).toFloat()
+        val leftAxis = chart.axisLeft
+        leftAxis.isEnabled = true
+        leftAxis.valueFormatter = YAxisValueFormatter()
+        leftAxis.setDrawGridLines(false)
+        leftAxis.setDrawGridLines(true)
+        leftAxis.gridColor = resources.getColor(R.color.grid)
+        leftAxis.gridLineWidth = 0.5f
+        leftAxis.setDrawAxisLine(true)
+        leftAxis.setDrawLabels(true)
+        leftAxis.granularity = 2f
+        val minY = valuesList.minOrNull() ?: 0f
+        val maxY = valuesList.maxOrNull() ?: 1f
+        leftAxis.axisMinimum = minY
+        leftAxis.axisMaximum = maxY + 1f
+        chart.axisRight.isEnabled = false
+        chart.invalidate()
+        chart.animateX(1000)
+        chart.invalidate()
+    }
+
+
+    private fun setChart() {
+        charts=binding.chart1
+        viewModel.data.observe(viewLifecycleOwner) { data ->
+            val values : MutableList<Entry> = mutableListOf()
+            val chartData=parseData(data.data.overall_url_chart.toString())
+            val keysList:MutableList<Float> = mutableListOf()
+            val valuesList:MutableList<Float> = mutableListOf()
+
+            if (!chartData.isNull) {
+                for (i in 0..23) {
+                    val key = String.format("%02d:00", i)
+                    val value = chartData?.get(key) ?: 0.0
+                    keysList.add(i.toFloat())
+                    valuesList.add(value.toFloat())
+                    values.add(Entry(i.toFloat(), value.toFloat()))
+                }
+                Log.d("DashboardFragment", "setChart: ${values}")
+                val set1 = LineDataSet(values, "DataSet 1")
+                set1.lineWidth = 1.75f
+                set1.color = resources.getColor(R.color.blue)
+                set1.setDrawValues(false)
+                set1.setDrawCircles(false)
+                set1.setDrawFilled(false)
+                val fillDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.gradient_fill)
+                set1.fillDrawable = fillDrawable
+                setupChart(charts, LineData(set1), resources.getColor(R.color.white), keysList, valuesList )
+            }
+        }
+    }
+
+
     private fun observeData(){
         viewModel.data.observe(viewLifecycleOwner) { data ->
             Log.d("DashboardFragment", "onCreate: ${data}")
             setData(data!!)
+            setChart()
         }
     }
     private fun setUpViews(){
-
 
 
         viewModel.greeting.observe(viewLifecycleOwner, Observer {

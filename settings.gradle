@@ -9,6 +9,7 @@ pluginManagement {
         }
         mavenCentral()
         gradlePluginPortal()
+        maven { url 'https://jitpack.io' }
     }
 }
 dependencyResolutionManagement {
@@ -21,3 +22,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "OpenInApp"
 include ':app'
+include ':mylibrary'
+include ':chartinglib'
