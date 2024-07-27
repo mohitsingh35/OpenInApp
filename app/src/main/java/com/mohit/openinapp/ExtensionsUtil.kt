@@ -3,6 +3,8 @@ package com.mohit.musicplayer.utils
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
 import android.app.Activity
+import android.app.AlertDialog
+import android.app.Dialog
 import android.app.DownloadManager
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -16,6 +18,7 @@ import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewPropertyAnimator
@@ -24,10 +27,12 @@ import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.snackbar.BaseTransientBottomBar.ANIMATION_MODE_SLIDE
@@ -39,13 +44,13 @@ import java.util.Date
 import java.util.Locale
 
 /*
-File : ExtensionsUtil.kt -> com.mohit.musicplayer
+File : ExtensionsUtil.kt -> com.mohit.openinapp
 Description : This file contains extension functions for different datatypes for easing out the development process
 
 Author : Mohit Singh
 Link : https://github.com/mohitsingh35
 
-Creation : 3:16 pm on 22/07/24
+Creation : 3:16 pm on 26/07/24
 
 Todo >
 Tasks CLEAN CODE :
@@ -56,6 +61,44 @@ Tasks FUTURE ADDITION :
 
 
 object ExtensionsUtil {
+
+    fun showProgressDialog(context: Context, message: String): Dialog {
+        val inflater = LayoutInflater.from(context)
+        val view = inflater.inflate(R.layout.progress_dialog, null)
+
+        val lottieAnimationView: LottieAnimationView = view.findViewById(R.id.animationView)
+        val textView: TextView = view.findViewById(R.id.textView)
+
+        lottieAnimationView.setAnimation(R.raw.loading)
+        lottieAnimationView.playAnimation()
+        textView.text = message
+
+        val dialog = AlertDialog.Builder(context)
+            .setView(view)
+            .setCancelable(false)
+            .create()
+
+        dialog.show()
+        return dialog
+    }
+
+    fun showButtonDialog(context: Context, message: String, onButtonClick: () -> Unit): Dialog {
+        val inflater = LayoutInflater.from(context)
+        val view = inflater.inflate(R.layout.button_dialog, null)
+        val textView: TextView = view.findViewById(R.id.textView)
+        val button: TextView = view.findViewById(R.id.button)
+        textView.text = message
+        val dialog = AlertDialog.Builder(context)
+            .setView(view)
+            .setCancelable(false)
+            .create()
+        button.setOnClickListener {
+            onButtonClick()
+            dialog.dismiss()
+        }
+        dialog.show()
+        return dialog
+    }
 
     fun Context.copyToClipboard(text: String) {
         val clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager

@@ -37,7 +37,6 @@ android {
             debuggable true
             buildConfigField("String", "BEARER_TOKEN", "\"${getProps("BEARER_TOKEN")}\"")
             buildConfigField("String", "API_URL", "\"${getProps("API_URL")}\"")
-
         }
         release {
             minifyEnabled false
@@ -77,4 +76,5 @@ dependencies {
     kapt libs.hilt.android.compiler
     implementation libs.androidx.hilt.common
     implementation libs.androidx.lifecycle.runtime.ktx
+    implementation(libs.lottie)
 }

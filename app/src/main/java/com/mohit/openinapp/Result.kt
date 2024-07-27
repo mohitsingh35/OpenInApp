@@ -1,6 +1,5 @@
 package com.mohit.openinapp
 
-import android.net.http.UrlRequest
 
 data class Result<out T>(val status: Status, val data: T? = null, val message: String? = null) {
     companion object {
@@ -12,3 +11,4 @@ data class Result<out T>(val status: Status, val data: T? = null, val message: S
 }
 
 enum class Status { SUCCESS, ERROR, LOADING }
+

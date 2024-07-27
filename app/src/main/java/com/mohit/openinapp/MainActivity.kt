@@ -1,5 +1,7 @@
 package com.mohit.openinapp
 
+import android.app.AlertDialog
+import android.app.Dialog
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -15,6 +17,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.mohit.musicplayer.utils.ExtensionsUtil.setOnClickSingleTimeBounceListener
 import com.mohit.musicplayer.utils.ExtensionsUtil.setOnClickThrottleBounceListener
+import com.mohit.musicplayer.utils.ExtensionsUtil.showButtonDialog
+import com.mohit.musicplayer.utils.ExtensionsUtil.showProgressDialog
 import com.mohit.musicplayer.utils.ExtensionsUtil.toast
 import com.mohit.openinapp.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,6 +34,8 @@ class MainActivity : AppCompatActivity() {
     }
     private val viewModel: MainViewModel by viewModels()
     private lateinit var navController: NavController
+    lateinit var dialog:Dialog
+    lateinit var buttonDialog:Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,21 +49,32 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun makeApiCall(){
+        dialog=showProgressDialog(this@MainActivity,"Fetching Data...")
+        if (::buttonDialog.isInitialized){
+            buttonDialog.dismiss()
+        }
         CoroutineScope(Dispatchers.IO).launch {
             viewModel.getLinksData()
             withContext(Dispatchers.Main){
                 viewModel.linksData.observe(this@MainActivity, Observer { data ->
                     when(data.status){
                         Status.SUCCESS -> {
-                            toast("Success...")
+                            dialog.dismiss()
                             Log.d("MainActivity", "onCreate: ${data.data}")
                             viewModel.setData(data.data!!)
                         }
                         Status.ERROR -> {
-                            toast("Some error occurred...")
+                            dialog.dismiss()
+                            if (::buttonDialog.isInitialized){
+                                buttonDialog.show()
+                            }
+                            else{
+                                buttonDialog=showButtonDialog(this@MainActivity,"Something went wrong. Please try again.", onButtonClick = {
+                                    makeApiCall()
+                                })
+                            }
                         }
                         Status.LOADING -> {
-                            toast("Loading...")
                         }
                     }
                 })
