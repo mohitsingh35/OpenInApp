@@ -1,4 +1,4 @@
-package com.mohit.musicplayer.utils
+package com.mohit.openinapp.HelperClasses
 
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
@@ -38,8 +38,6 @@ import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.snackbar.BaseTransientBottomBar.ANIMATION_MODE_SLIDE
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.mohit.openinapp.R
 import java.text.SimpleDateFormat
 import java.util.Date

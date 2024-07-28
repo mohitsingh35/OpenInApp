@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/fragment_dashboard"
-        android:name="com.mohit.openinapp.DashboardFragment"
+        android:name="com.mohit.openinapp.UI.MainScreen.Dashboard.DashboardFragment"
         android:label="DashboardFragment"
         tools:layout="@layout/fragment_dashboard" >
 
@@ -16,7 +16,7 @@
 
     <fragment
         android:id="@+id/fragment_courses"
-        android:name="com.mohit.openinapp.CoursesFragment"
+        android:name="com.mohit.openinapp.UI.MainScreen.Courses.CoursesFragment"
         android:label="CoursesFragment"
         tools:layout="@layout/fragment_courses" >
 
@@ -25,7 +25,7 @@
 
     <fragment
         android:id="@+id/fragment_campaigns"
-        android:name="com.mohit.openinapp.CampaignsFragment"
+        android:name="com.mohit.openinapp.UI.MainScreen.Campaigns.CampaignsFragment"
         android:label="CampaignsFragment"
         tools:layout="@layout/fragment_campaigns" >
 
@@ -34,7 +34,7 @@
 
     <fragment
         android:id="@+id/fragment_profile"
-        android:name="com.mohit.openinapp.ProfileFragment"
+        android:name="com.mohit.openinapp.UI.MainScreen.Profile.ProfileFragment"
         android:label="ProfileFragment"
         tools:layout="@layout/fragment_profile" >
 

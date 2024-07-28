@@ -1,4 +1,4 @@
-package com.mohit.openinapp
+package com.mohit.openinapp.Models
 
 data class Data(
     val favourite_links: List<Any>,

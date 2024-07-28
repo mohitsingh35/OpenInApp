@@ -1,14 +1,16 @@
-package com.mohit.openinapp
+package com.mohit.openinapp.UI.UIComponents.Adapters
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.mohit.musicplayer.utils.ExtensionsUtil.copyToClipboard
-import com.mohit.musicplayer.utils.ExtensionsUtil.formatDate
-import com.mohit.musicplayer.utils.ExtensionsUtil.load
-import com.mohit.musicplayer.utils.ExtensionsUtil.setOnClickThrottleBounceListener
+import com.mohit.openinapp.HelperClasses.ExtensionsUtil.copyToClipboard
+import com.mohit.openinapp.HelperClasses.ExtensionsUtil.formatDate
+import com.mohit.openinapp.HelperClasses.ExtensionsUtil.load
+import com.mohit.openinapp.HelperClasses.ExtensionsUtil.setOnClickThrottleBounceListener
+import com.mohit.openinapp.R
+import com.mohit.openinapp.Models.TopLink
 import com.mohit.openinapp.databinding.ListItemBinding
 
 class LinksAdapter(

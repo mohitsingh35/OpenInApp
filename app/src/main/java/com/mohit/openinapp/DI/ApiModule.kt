@@ -1,14 +1,15 @@
-package com.mohit.openinapp
+package com.mohit.openinapp.DI
 
 import android.content.Context
+import com.mohit.openinapp.API.ApiService
+import com.mohit.openinapp.API.AuthInterceptor
+import com.mohit.openinapp.HelperClasses.PrefManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

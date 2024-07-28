@@ -1,8 +1,11 @@
-package com.mohit.openinapp
+package com.mohit.openinapp.UI.UIComponents.ViewModels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.mohit.openinapp.API.ApiService
+import com.mohit.openinapp.Models.LinksData
+import com.mohit.openinapp.HelperClasses.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import retrofit2.HttpException
 import java.io.IOException
@@ -79,13 +82,13 @@ class MainViewModel @Inject constructor(private val apiService: ApiService) : Vi
 
     fun setTabSelected(tabState: TabState) {
         _selectedTab.value = tabState
-        _viewAllLinksState.value=ViewAllLinksState.Collapsed
+        _viewAllLinksState.value= ViewAllLinksState.Collapsed
     }
 
     fun toggleViewAllLinks() {
         when (_viewAllLinksState.value) {
-            ViewAllLinksState.Collapsed -> _viewAllLinksState.value=ViewAllLinksState.Expanded
-            ViewAllLinksState.Expanded -> _viewAllLinksState.value=ViewAllLinksState.Collapsed
+            ViewAllLinksState.Collapsed -> _viewAllLinksState.value= ViewAllLinksState.Expanded
+            ViewAllLinksState.Expanded -> _viewAllLinksState.value= ViewAllLinksState.Collapsed
             else -> null
         }
     }

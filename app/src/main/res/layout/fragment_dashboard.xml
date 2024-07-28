@@ -9,7 +9,7 @@
     android:layout_marginBottom="77dp"
     android:weightSum="10"
     android:layout_height="match_parent"
-    tools:context=".DashboardFragment">
+    tools:context=".UI.MainScreen.Dashboard.DashboardFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -1,8 +1,8 @@
-package com.mohit.openinapp
+package com.mohit.openinapp.API
 
+import com.mohit.openinapp.Models.LinksData
 import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.Headers
 
 interface ApiService {
     @GET("api/v1/dashboardNew")

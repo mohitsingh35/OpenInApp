@@ -1,4 +1,4 @@
-package com.mohit.openinapp
+package com.mohit.openinapp.Models
 
 data class TopLink(
     val app: String?=null,

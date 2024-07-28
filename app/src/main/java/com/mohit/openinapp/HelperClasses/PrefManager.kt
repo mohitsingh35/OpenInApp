@@ -1,4 +1,4 @@
-package com.mohit.openinapp
+package com.mohit.openinapp.HelperClasses
 
 import android.content.Context
 import android.content.SharedPreferences

@@ -1,4 +1,4 @@
-package com.mohit.openinapp
+package com.mohit.openinapp.UI.MainScreen.Dashboard
 
 import android.os.Bundle
 import android.util.Log
@@ -18,9 +18,18 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
-import com.mohit.musicplayer.utils.ExtensionsUtil.isNull
-import com.mohit.musicplayer.utils.ExtensionsUtil.parseData
-import com.mohit.musicplayer.utils.ExtensionsUtil.setOnClickThrottleBounceListener
+import com.mohit.openinapp.HelperClasses.ExtensionsUtil.isNull
+import com.mohit.openinapp.HelperClasses.ExtensionsUtil.parseData
+import com.mohit.openinapp.HelperClasses.ExtensionsUtil.setOnClickThrottleBounceListener
+import com.mohit.openinapp.UI.UIComponents.Adapters.LinksAdapter
+import com.mohit.openinapp.Models.LinksData
+import com.mohit.openinapp.UI.UIComponents.ViewModels.MainViewModel
+import com.mohit.openinapp.R
+import com.mohit.openinapp.UI.UIComponents.ViewModels.TabState
+import com.mohit.openinapp.Models.TopLink
+import com.mohit.openinapp.UI.UIComponents.ViewModels.ViewAllLinksState
+import com.mohit.openinapp.HelperClasses.XAxisValueFormatter
+import com.mohit.openinapp.HelperClasses.YAxisValueFormatter
 import com.mohit.openinapp.databinding.FragmentDashboardBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -76,7 +85,9 @@ class DashboardFragment : Fragment() {
                 set1.setDrawValues(false)
                 set1.setDrawCircles(false)
                 set1.setDrawFilled(false)
-                val fillDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.gradient_fill)
+                val fillDrawable = ContextCompat.getDrawable(requireContext(),
+                    R.drawable.gradient_fill
+                )
                 set1.fillDrawable = fillDrawable
                 setupChart(charts, LineData(set1), resources.getColor(R.color.white), keysList, valuesList )
             }
@@ -166,7 +177,8 @@ class DashboardFragment : Fragment() {
                     val recentLinks = linksData.data.recent_links
                     val topLinks:MutableList<TopLink> = mutableListOf()
                     for (recentLink in recentLinks){
-                        topLinks.add(TopLink(
+                        topLinks.add(
+                            TopLink(
                             original_image = recentLink.original_image,
                             title = recentLink.title,
                             created_at = recentLink.created_at,
@@ -181,7 +193,8 @@ class DashboardFragment : Fragment() {
                             is_favourite = recentLink.is_favourite,
                             thumbnail = recentLink.thumbnail,
                             app = recentLink.app,
-                        ))
+                        )
+                        )
                     }
 
                     viewLifecycleOwner.lifecycleScope.launchWhenStarted {

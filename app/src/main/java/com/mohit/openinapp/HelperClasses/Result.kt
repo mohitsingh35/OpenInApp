@@ -1,4 +1,4 @@
-package com.mohit.openinapp
+package com.mohit.openinapp.HelperClasses
 
 
 data class Result<out T>(val status: Status, val data: T? = null, val message: String? = null) {

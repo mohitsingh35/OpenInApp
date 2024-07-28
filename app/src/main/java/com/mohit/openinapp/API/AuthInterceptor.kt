@@ -1,5 +1,6 @@
-package com.mohit.openinapp
+package com.mohit.openinapp.API
 
+import com.mohit.openinapp.HelperClasses.PrefManager
 import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject

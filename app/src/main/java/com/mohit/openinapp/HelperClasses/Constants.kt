@@ -1,4 +1,4 @@
-package com.mohit.openinapp
+package com.mohit.openinapp.HelperClasses
 
 object Constants {
     const val BASE_URL = "https://api.inopenapp.com/"
