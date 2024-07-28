@@ -7,6 +7,5 @@ import dagger.hilt.android.HiltAndroidApp
 class BaseApp : Application() {
     override fun onCreate() {
         super.onCreate()
-        PrefManager.initialize(this)
     }
 }

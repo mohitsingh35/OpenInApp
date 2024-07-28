@@ -1,8 +1,10 @@
 package com.mohit.openinapp
 
+import android.content.Context
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -18,23 +20,27 @@ object ApiModule {
 
     @Provides
     @Singleton
-    fun provideOkHTTPClient(): OkHttpClient {
-        val interceptor = HttpLoggingInterceptor()
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-        return OkHttpClient.Builder().addInterceptor(interceptor)
-            .addInterceptor(Interceptor { chain: Interceptor.Chain ->
-                val request: Request = chain.request()
-                chain.proceed(request)
-            }).build()
+    fun providePrefManager(@ApplicationContext context: Context): PrefManager {
+        return PrefManager(context)
     }
-
 
     @Provides
     @Singleton
-    fun getApiService(okkHttpClient: OkHttpClient): ApiService {
+    fun provideOkHTTPClient(authInterceptor: AuthInterceptor): OkHttpClient {
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+        return OkHttpClient.Builder()
+            .addInterceptor(interceptor)
+            .addInterceptor(authInterceptor)
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideApiService(okHttpClient: OkHttpClient, prefManager: PrefManager): ApiService {
         return Retrofit.Builder()
-            .baseUrl(BuildConfig.API_URL)
-            .client(okkHttpClient)
+            .baseUrl(prefManager.getBaseUrl()!!)
+            .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(ApiService::class.java)
