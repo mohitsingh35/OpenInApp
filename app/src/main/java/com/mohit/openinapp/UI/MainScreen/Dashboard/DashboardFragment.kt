@@ -32,6 +32,9 @@ import com.mohit.openinapp.HelperClasses.XAxisValueFormatter
 import com.mohit.openinapp.HelperClasses.YAxisValueFormatter
 import com.mohit.openinapp.databinding.FragmentDashboardBinding
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 
 @AndroidEntryPoint
@@ -277,12 +280,15 @@ class DashboardFragment : Fragment() {
     }
 
     private fun setAnalyticsData(linksData: LinksData){
-        binding.clicks.count.text=linksData.today_clicks.toString()
-        binding.toplocation.count.text=linksData.top_location
-        binding.sources.count.text=linksData.top_source
+        binding.clicks.count.text=linksData.today_clicks.toString().capitalize()
+        binding.toplocation.count.text=linksData.top_location.capitalize()
+        binding.sources.count.text=linksData.top_source.capitalize()
     }
 
     private fun setDefaultViews(){
+
+        setTime(binding.time)
+
         binding.clicks.ic.setImageResource(R.drawable.clicks)
         binding.clicks.count.text="..."
         binding.clicks.text.text="Today's clicks"
@@ -295,6 +301,18 @@ class DashboardFragment : Fragment() {
         binding.sources.count.text="..."
         binding.sources.text.text="Top sources"
     }
+
+    fun setTime(textView: TextView) {
+        val calendar = Calendar.getInstance()
+        val currentDate = calendar.time
+        calendar.add(Calendar.DAY_OF_MONTH, -1)
+        val previousDate = calendar.time
+        val dateFormat = SimpleDateFormat("dd MMM", Locale.getDefault())
+        val currentDateString = dateFormat.format(currentDate)
+        val previousDateString = dateFormat.format(previousDate)
+        textView.text = "$previousDateString - $currentDateString"
+    }
+
 
 
 
